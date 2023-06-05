@@ -17,7 +17,10 @@ As Snowflake is used more and more frequently as the central datawarehouse users
 ### Prerequisites
 - A Snowflake Account that you have `ACCOUNTADMIN`
 - Familiarity with Snowflake SQL
+<<<<<<< HEAD
 - Agreed to the [Snowflake Consumer Terms of Service](<https://other-docs.snowflake.com/en/collaboration/consumer-becoming>) for the Marketplace
+=======
+>>>>>>> 8857aec (some first mods)
 
 ### What You’ll Learn 
 - How to install the FullContact for Snowflake Native Application
@@ -33,6 +36,31 @@ As Snowflake is used more and more frequently as the central datawarehouse users
 
 <!-- ------------------------ -->
 ## Install the FullContact for Snowflake App
+<<<<<<< HEAD
+=======
+Duration: 1
+
+The FullContact for Snowflake Native App is available in the Snowlflake Marketplace
+
+1) Visit the "Apps" section of your Snowflake Account - ex where YOURACCOUNTLOCATOR is your own Snowflake Account Locator https://app.snowflake.com/us-east-1/YOURACCOUNTLOCATOR/#/apps/applications
+
+![Install App](assets/installapp.png)
+
+
+<!-- ------------------------ -->
+## Creating a FullContact account and API key
+Duration: 1
+
+A single sfguide consists of multiple steps. These steps are defined in Markdown using Header 2 tag `##`. 
+
+```markdown
+## Step 1 Title
+Duration: 3
+
+All the content for the step goes here.
+
+## Step 2 Title
+>>>>>>> 8857aec (some first mods)
 Duration: 1
 
 The FullContact for Snowflake Native App is available in the Snowflake Marketplace
@@ -58,8 +86,13 @@ The FullContact for Snowflake Native App is available in the Snowflake Marketpla
 7) Click the **Open** button, which will open a worksheet pre-populated with the queries you will need to complete the installation.
 
 <!-- ------------------------ -->
+<<<<<<< HEAD
 ## Complete configuration of FullContact App
 Once installed there are a few more steps that need to be completed before the FullContact for Snowflake application can function. Follow these instructions by pasting and running the following SQL in a new SQL worksheet.
+=======
+## Configuring the FullContact for Snowflake App
+Duration: 2
+>>>>>>> 8857aec (some first mods)
 
 1) Create and grant access to API INTEGRATION
 
@@ -93,7 +126,11 @@ CALL FC_NATIVE_APP.APP_SCHEMA.CREATE_EF_PUT_USAGE('FC_API_INT_FULLCONTACT_IDENTI
 
 
 <!-- ------------------------ -->
+<<<<<<< HEAD
 ## Creating a FullContact account and API key
+=======
+## Prepping the data 
+>>>>>>> 8857aec (some first mods)
 Duration: 2
 
 In order to use the FullContact for Snowflake Application you need a license (API) key. Follow these instructions to get one for free and use the generated key in the next sections.
@@ -238,6 +275,23 @@ Videos from youtube can be directly embedded:
 <<<<<<< HEAD
 <!-- ------------------------ -->
 ## Assign PersonID by Resolving Sample Data
+<<<<<<< HEAD
+=======
+Duration: 1
+
+At the end of your Snowflake Guide, always have a clear call to action (CTA). This CTA could be a link to the docs pages, links to videos on youtube, a GitHub repo link, etc. 
+
+If you want to learn more about Snowflake Guide formatting, checkout the official documentation here: [Formatting Guide](https://github.com/googlecodelabs/tools/blob/master/FORMAT-GUIDE.md)
+
+### What we've covered
+- creating steps and setting duration
+- adding code snippets
+- embedding images, videos, and surveys
+- importing other markdown files
+
+<!-- ------------------------ -->
+## Conclusion
+>>>>>>> 8857aec (some first mods)
 Duration: 1
 =======
 ```
