@@ -7,67 +7,43 @@ status: Published
 feedback link: https://github.com/Snowflake-Labs/sfguides/issues
 tags: Getting Started, Data Science, Data Engineering, Twitter 
 
-# How to resolve data with fullcontact and snowflake
+# How To Resolve Rata with FullContact and Snowflake
 <!-- ------------------------ -->
-## Overview 
 Duration: 1
 
-Please use [this markdown file](https://raw.githubusercontent.com/Snowflake-Labs/sfguides/master/site/sfguides/sample.md) as a template for writing your own Snowflake Quickstarts. This example guide has elements that you will use when writing your own guides, including: code snippet highlighting, downloading files, inserting photos, and more. 
-
-It is important to include on the first page of your guide the following sections: Prerequisites, What you'll learn, What you'll need, and What you'll build. Remember, part of the purpose of a Snowflake Guide is that the reader will have **built** something by the end of the tutorial; this means that actual code needs to be included (not just pseudo-code).
-
-The rest of this Snowflake Guide explains the steps of writing your own guide. 
+## Overview 
+As Snowflake is used more and more frequently as the central datawarehouse users often find themselves with duplicate copies of customer information in different tables. This guide shows how to use the FullContact for Snowflake Native Application to unify different pieces of customer data using the FullContact PersonID.
 
 ### Prerequisites
-- Familiarity with Markdown syntax
+- A Snowflake Account that you have `ACCOUNTADMIN`
+- Familiarity with Snowflake SQL
 
 ### What You’ll Learn 
-- how to set the metadata for a guide (category, author, id, etc)
-- how to set the amount of time each slide will take to finish 
-- how to include code snippets 
-- how to hyperlink items 
-- how to include images 
+- How to install the FullContact for Snowflake Native Application
+- How to configure and setup the FullContact for Snowflake Native Application
+- How to use the FullContact for Snowflake Native Application to unify and dedeuplicate multiple sources of customer data
 
 ### What You’ll Need 
-- A [GitHub](https://github.com/) Account 
-- [VSCode](https://code.visualstudio.com/download) Installed
-- [NodeJS](https://nodejs.org/en/download/) Installed
-- [GoLang](https://golang.org/doc/install) Installed
+- [Snowflake Account](https://signup.snowflake.com/) with `ACCOUNTADMIN` access
+- [FullContact Trial Account](https://platform.fullcontact.com/register/offer/snowresolve)
 
 ### What You’ll Build 
-- A Snowflake Guide
+- A unified customer dataset 
 
 <!-- ------------------------ -->
-## Metadata Configuration
-Duration: 2
+## Install the FullContact for Snowflake App
+Duration: 1
 
-It is important to set the correct metadata for your Snowflake Guide. The metadata contains all the information required for listing and publishing your guide and includes the following:
+The FullContact for Snowflake Native App is available in the Snowlflake Marketplace
 
+1) Visit the "Apps" section of your Snowflake Account - ex where YOURACCOUNTLOCATOR is your own Snowflake Account Locator https://app.snowflake.com/us-east-1/YOURACCOUNTLOCATOR/#/apps/applications
 
-- **summary**: This is a sample Snowflake Guide 
-  - This should be a short, 1 sentence description of your guide. This will be visible on the main landing page. 
-- **id**: sample 
-  - make sure to match the id here with the name of the file, all one word.
-- **categories**: data-science 
-  - You can have multiple categories, but the first one listed is used for the icon.
-- **environments**: web 
-  - `web` is default. If this will be published for a specific event or  conference, include it here.
-- **status**: Published
-  - (`Draft`, `Published`, `Deprecated`, `Hidden`) to indicate the progress and whether the sfguide is ready to be published. `Hidden` implies the sfguide is for restricted use, should be available only by direct URL, and should not appear on the main landing page.
-- **feedback link**: https://github.com/Snowflake-Labs/sfguides/issues
-- **tags**: Getting Started, Data Science, Twitter 
-  - Add relevant  tags to make your sfguide easily found and SEO friendly.
-- **authors**: Daniel Myers 
-  - Indicate the author(s) of this specific sfguide.
-
----
-
-You can see the source metadata for this guide you are reading now, on [the github repo](https://raw.githubusercontent.com/Snowflake-Labs/sfguides/master/site/sfguides/sample.md).
+![Install App](assets/installapp.png)
 
 
 <!-- ------------------------ -->
-## Creating a Step
-Duration: 2
+## Creating a FullContact account and API key
+Duration: 1
 
 A single sfguide consists of multiple steps. These steps are defined in Markdown using Header 2 tag `##`. 
 
@@ -88,7 +64,7 @@ To indicate how long each step will take, set the `Duration` under the step titl
 The total sfguide completion time is calculated automatically for you and will be displayed on the landing page. 
 
 <!-- ------------------------ -->
-## Code Snippets, Info Boxes, and Tables
+## Configuring the FullContact for Snowflake App
 Duration: 2
 
 Look at the [markdown source for this sfguide](https://raw.githubusercontent.com/Snowflake-Labs/sfguides/master/site/sfguides/sample.md) to see how to use markdown to generate code snippets, info boxes, and download buttons. 
@@ -144,7 +120,7 @@ for (statement 1; statement 2; statement 3) {
 [Youtube - Halsey Playlists](https://www.youtube.com/user/iamhalsey/playlists)
 
 <!-- ------------------------ -->
-## Images, Videos, and Surveys, and iFrames
+## Prepping the data 
 Duration: 2
 
 Look at the [markdown source for this guide](https://raw.githubusercontent.com/Snowflake-Labs/sfguides/master/site/sfguides/sample.md) to see how to use markdown to generate these elements. 
@@ -166,6 +142,20 @@ Videos from youtube can be directly embedded:
 
 ### Embed an iframe
 ![https://codepen.io/MarioD/embed/Prgeja](https://en.wikipedia.org/wiki/File:Example.jpg "Try Me Publisher")
+
+<!-- ------------------------ -->
+## Assign PersonID by Resolving Sample Data
+Duration: 1
+
+At the end of your Snowflake Guide, always have a clear call to action (CTA). This CTA could be a link to the docs pages, links to videos on youtube, a GitHub repo link, etc. 
+
+If you want to learn more about Snowflake Guide formatting, checkout the official documentation here: [Formatting Guide](https://github.com/googlecodelabs/tools/blob/master/FORMAT-GUIDE.md)
+
+### What we've covered
+- creating steps and setting duration
+- adding code snippets
+- embedding images, videos, and surveys
+- importing other markdown files
 
 <!-- ------------------------ -->
 ## Conclusion
