@@ -40,28 +40,92 @@ The FullContact for Snowflake Native App is available in the Snowlflake Marketpl
 
 ![Install App](assets/installapp.png)
 
+2) Under the "Recently Shared with You" click the "Get" button next to the FullContact Native Identity Application
+
+3) Choose the warehouse to use to run the install scripts (an XS warehouse works fine). 
+
+4) Expand the Options dropdown, where you are able to name the application anything you would like.  We have named the app "FC_NATIVE_APP".  This is the app name we use in the SQL queries we provide post installation of the application in a Snowsight worksheet to help you complete the installation.  
+
+![App options](assets/installoptions.png)
+
+5) Click the Get button to install the application.  The Get button will be deactivated while installing.  There is not currently a loader that displays to give a sense for how the installation is progressing - the installers typically complete within 1-2 minutes.   
+
+6) Once installation is complete, you will see a confirmation modal.  
+
+![Install complete](assets/installcomplete.png)
+
+7) Click the **Open** button, which will open a worksheet pre-populated with the queries you will need to complete the installation.
+
+<!-- ------------------------ -->
+## Complete configuration of FullContact App
+Once installed there are a few more steps that need to be complete before the FullContact for Snowflake application can function. Follow these instructions by pasting and running the following SQL in a new SQL worksheet.
+
+1) Create and grant access to API INTEGRATION
+
+> aside positive
+> 
+>  The `API INTEGRATION` is used to check your license key, allowed usage, and report usage summary counts back to FullContact. Your raw data never leaves Snowflake as the app executes nativly and FullContact will not have access to your raw data unless you decide to share it with us using a normal secure share.
+
+```sql
+CREATE API INTEGRATION IF NOT EXISTS FC_API_INT_FULLCONTACT_IDENTITY_SOLUTIONS
+    API_PROVIDER = aws_api_gateway
+    API_AWS_ROLE_ARN = 'arn:aws:iam::966965295085:role/cx-blizzard-snowflake'
+    API_ALLOWED_PREFIXES = ('https://um58694ui8.execute-api.us-east-1.amazonaws.com/blizzard-default/v3')
+    ENABLED = true;
+
+-- Grant access to allow a specific user or role to use this application
+GRANT USAGE ON INTEGRATION FC_API_INT_FULLCONTACT_IDENTITY_SOLUTIONS TO APPLICATION FC_NATIVE_APP;
+GRANT APPLICATION ROLE FC_NATIVE_APP.FC_USER TO ROLE ACCOUNTADMIN;
+```
+
+2) Install and define the `EXTERNAL FUNCTIONS` that the application needs to run. 
+
+```sql
+-- Install the EFs (external functions) that the app needs to run:
+-- install EFs
+CALL FC_NATIVE_APP.APP_SCHEMA.CREATE_EF_GET_DATAPACKS('FC_API_INT_FULLCONTACT_IDENTITY_SOLUTIONS');
+CALL FC_NATIVE_APP.APP_SCHEMA.CREATE_EF_GET_OAUTH_GROUP_LIST('FC_API_INT_FULLCONTACT_IDENTITY_SOLUTIONS');
+CALL FC_NATIVE_APP.APP_SCHEMA.CREATE_EF_GET_OAUTH_GROUP_MEMBER_LIST('FC_API_INT_FULLCONTACT_IDENTITY_SOLUTIONS');
+CALL FC_NATIVE_APP.APP_SCHEMA.CREATE_EF_GET_PRODUCT_USAGE('FC_API_INT_FULLCONTACT_IDENTITY_SOLUTIONS');
+CALL FC_NATIVE_APP.APP_SCHEMA.CREATE_EF_PUT_USAGE('FC_API_INT_FULLCONTACT_IDENTITY_SOLUTIONS');
+```
+
 
 <!-- ------------------------ -->
 ## Creating a FullContact account and API key
-Duration: 1
+Duration: 2
 
-A single sfguide consists of multiple steps. These steps are defined in Markdown using Header 2 tag `##`. 
+In order to use the FullContact for Snowflake Application you need a license (API) key. Follow these instructions to get one for free and use the generated key in the next sections.
 
-```markdown
-## Step 1 Title
-Duration: 3
+1) Visit the [FullContact for Snowflake Offer Page](https://platform.fullcontact.com/register/offer/snowresolve)
 
-All the content for the step goes here.
+![Platform Offer](assets/platformoffer.png)
 
-## Step 2 Title
-Duration: 1
+2) Enter your business email address and click "Create Account". Once complete you should see a page directing you to check your email.
 
-All the content for the step goes here.
-```
+![Platform Signup](assets/signupbutton.png)
 
-To indicate how long each step will take, set the `Duration` under the step title (i.e. `##`) to an integer. The integers refer to minutes. If you set `Duration: 4` then a particular step will take 4 minutes to complete. 
+3) Check your email to find a "Welcome to FullContact" email. Click the "Verify This Email Address" button to setup your initial password
 
-The total sfguide completion time is calculated automatically for you and will be displayed on the landing page. 
+![Verify Email](assets/verifyemail.png)
+
+4) Choose your new Password and complete the short "Tell Us About Your Business Form"
+
+5) Once the form is complete you will be logged into the FullContact Platform. Click the "API Keys" menu option on the left hand side.
+
+![API Keys](assets/apikeys.png)
+
+6) Click the "+ Generate API Key" button, verify your phone number via SMS then name your key (we used `Snowflake Key` in this example)
+
+![Name Key](assets/namekey.png)
+
+7) Click the copy button to copy the value of the key into a secure location for the next step (a notepad or file would work)
+
+![Copy Key](assets/copykey.png)
+
+
+
+
 
 <!-- ------------------------ -->
 ## Configuring the FullContact for Snowflake App
