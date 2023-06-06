@@ -210,50 +210,43 @@ At this point you should have your SEMANTIC view `FC_QUICKSTART.OUTPUT.CUST_JOUR
 ## Running the Resolve SPROC to Assign PersonIDs
 Duration: 1
 
-Look at the [markdown source for this guide](https://raw.githubusercontent.com/Snowflake-Labs/sfguides/master/site/sfguides/sample.md) to see how to use markdown to generate these elements. 
+These steps are where the magic happens. Copy, paste and run the following SQL to take the Sample provided data and run it through the FullContact Resolve process (which standardizes it and joins it to the FullContact Identity Graph) and assign PersonIDs
 
-### Images
-![Puppy](assets/SAMPLE.jpg)
+1) Run the `RESOLVE` SPROC (replace the `REPLACEWITHYOURAPIKEY` string below with the API you created in the FullContact platform in the previous step)
 
-### Videos
-Videos from youtube can be directly embedded:
-<video id="KmeiFXrZucE"></video>
+```sql
+-- Call the RESOLVE SPROC to resolve and assign PIDs to sample data
+CALL FC_NATIVE_APP.APP_SCHEMA.RESOLVE(
+'FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC',                -- input view
+'REPLACEWITHYOURAPIKEY',                                              -- api key
+'FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS' -- output table
+);
+```
 
-### Inline Surveys
-<form>
-  <name>How do you rate yourself as a user of Snowflake?</name>
-  <input type="radio" value="Beginner">
-  <input type="radio" value="Intermediate">
-  <input type="radio" value="Advanced">
-</form>
+2) View the results, making note of the PIDs column, view metrics.
 
-### Embed an iframe
-![https://codepen.io/MarioD/embed/Prgeja](https://en.wikipedia.org/wiki/File:Example.jpg "Try Me Publisher")
+```sql
+SELECT * FROM FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS LIMIT 10;
 
-<!-- ------------------------ -->
-## Assign PersonID by Resolving Sample Data
-Duration: 1
+SELECT * FROM FC_NATIVE_APP.METRICS.FC_RESOLVE_METRICS;
+```
 
-At the end of your Snowflake Guide, always have a clear call to action (CTA). This CTA could be a link to the docs pages, links to videos on youtube, a GitHub repo link, etc. 
 
-If you want to learn more about Snowflake Guide formatting, checkout the official documentation here: [Formatting Guide](https://github.com/googlecodelabs/tools/blob/master/FORMAT-GUIDE.md)
+3) Note how the different versions of Willow were all consolidated into the same PersonID
 
-### What we've covered
-- creating steps and setting duration
-- adding code snippets
-- embedding images, videos, and surveys
-- importing other markdown files
+```sql
+SELECT * FROM FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS WHERE PIDS[0]='TODOREPLACEME!!!!!!!';
+```
 
 <!-- ------------------------ -->
 ## Conclusion
 Duration: 1
 
-At the end of your Snowflake Guide, always have a clear call to action (CTA). This CTA could be a link to the docs pages, links to videos on youtube, a GitHub repo link, etc. 
+By following this guide you learned how to use the FullContact for Snowlfake application to unify disparate customer data through the Fullcontact PersonID. This application reads, standardizes and joins your dataset to the FullContact Identity Graph all without your data leaving the confines of Snowflake or being shared with FullContact.
 
-If you want to learn more about Snowflake Guide formatting, checkout the official documentation here: [Formatting Guide](https://github.com/googlecodelabs/tools/blob/master/FORMAT-GUIDE.md)
+If you want to learn more about FullContact for Snowflake check out the official docs and consider contacting an expert to learn more about the different products FullContact offers and how it can help you better connect to your customers.
 
 ### What we've covered
-- creating steps and setting duration
-- adding code snippets
-- embedding images, videos, and surveys
-- importing other markdown files
+- Installing and setting up the FullContact for Snowflake App
+- Creating a FullContact account and API key
+- Running the FullContact for Snowflake App on sample customer data to unify and deuplicate disparate datasets
