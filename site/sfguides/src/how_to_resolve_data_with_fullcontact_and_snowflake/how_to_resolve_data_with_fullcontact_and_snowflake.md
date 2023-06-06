@@ -17,6 +17,7 @@ As Snowflake is used more and more frequently as the central datawarehouse users
 ### Prerequisites
 - A Snowflake Account that you have `ACCOUNTADMIN`
 - Familiarity with Snowflake SQL
+- Agreed to the [Snowflake Consumer Terms of Service](<https://other-docs.snowflake.com/en/collaboration/consumer-becoming>) for the Marketplace
 
 ### What You’ll Learn 
 - How to install the FullContact for Snowflake Native Application
@@ -34,7 +35,7 @@ As Snowflake is used more and more frequently as the central datawarehouse users
 ## Install the FullContact for Snowflake App
 Duration: 1
 
-The FullContact for Snowflake Native App is available in the Snowlflake Marketplace
+The FullContact for Snowflake Native App is available in the Snowflake Marketplace
 
 1) Visit the "Apps" section of your Snowflake Account - ex where YOURACCOUNTLOCATOR is your own Snowflake Account Locator https://app.snowflake.com/us-east-1/YOURACCOUNTLOCATOR/#/apps/applications
 
@@ -58,13 +59,13 @@ The FullContact for Snowflake Native App is available in the Snowlflake Marketpl
 
 <!-- ------------------------ -->
 ## Complete configuration of FullContact App
-Once installed there are a few more steps that need to be complete before the FullContact for Snowflake application can function. Follow these instructions by pasting and running the following SQL in a new SQL worksheet.
+Once installed there are a few more steps that need to be completed before the FullContact for Snowflake application can function. Follow these instructions by pasting and running the following SQL in a new SQL worksheet.
 
 1) Create and grant access to API INTEGRATION
 
 > aside positive
 > 
->  The `API INTEGRATION` is used to check your license key, allowed usage, and report usage summary counts back to FullContact. Your raw data never leaves Snowflake as the app executes nativly and FullContact will not have access to your raw data unless you decide to share it with us using a normal secure share.
+>  The `API INTEGRATION` is used to check your license key, allowed usage, and report usage summary counts back to FullContact. Your raw data never leaves Snowflake as the app executes natively and FullContact will not have access to your raw data unless you decide to share it with us using a normal secure share.
 
 ```sql
 CREATE API INTEGRATION IF NOT EXISTS FC_API_INT_FULLCONTACT_IDENTITY_SOLUTIONS
@@ -145,7 +146,7 @@ GRANT USAGE ON DATABASE FC_QUICKSTART TO APPLICATION FC_NATIVE_APP;
 GRANT USAGE ON SCHEMA FC_QUICKSTART.OUTPUT TO APPLICATION FC_NATIVE_APP;
 ```
 
-2) Create the Semantic Input view. Run the following stored procedure. It will scan the input dataset and output additional SQL that you will need to copy/paste/run into your worksheet. 
+2) Create the Semantic Input view. Run the following stored procedure. It will scan the sample input dataset and output additional SQL that you will need to copy/paste/run into your worksheet. 
 
 ```sql
 CALL FC_NATIVE_APP.APP_SCHEMA.CREATE_INPUT_VIEW(
@@ -219,6 +220,7 @@ Look at the [markdown source for this guide](https://raw.githubusercontent.com/S
 Videos from youtube can be directly embedded:
 <video id="KmeiFXrZucE"></video>
 
+<<<<<<< HEAD
 ### Inline Surveys
 <form>
   <name>How do you rate yourself as a user of Snowflake?</name>
@@ -226,13 +228,26 @@ Videos from youtube can be directly embedded:
   <input type="radio" value="Intermediate">
   <input type="radio" value="Advanced">
 </form>
+=======
+2) View the results, making note of the Person IDs(PIDs) column, view metrics.
+>>>>>>> 1bfbc99 (added small tweaks and spelling errors)
 
 ### Embed an iframe
 ![https://codepen.io/MarioD/embed/Prgeja](https://en.wikipedia.org/wiki/File:Example.jpg "Try Me Publisher")
 
+<<<<<<< HEAD
 <!-- ------------------------ -->
 ## Assign PersonID by Resolving Sample Data
 Duration: 1
+=======
+```
+
+3) For each call, you can view some summary metrics on how your records were resolved.
+
+```sql
+SELECT * FROM FC_NATIVE_APP.METRICS.FC_RESOLVE_METRICS;
+```
+>>>>>>> 1bfbc99 (added small tweaks and spelling errors)
 
 At the end of your Snowflake Guide, always have a clear call to action (CTA). This CTA could be a link to the docs pages, links to videos on youtube, a GitHub repo link, etc. 
 
@@ -248,7 +263,11 @@ If you want to learn more about Snowflake Guide formatting, checkout the officia
 ## Conclusion
 Duration: 1
 
+<<<<<<< HEAD
 At the end of your Snowflake Guide, always have a clear call to action (CTA). This CTA could be a link to the docs pages, links to videos on youtube, a GitHub repo link, etc. 
+=======
+By following this guide you learned how to use the FullContact for Snowfake application to unify disparate customer data through the Fullcontact PersonID. This application reads, standardizes and joins your dataset to the FullContact Identity Graph all without your data leaving the confines of Snowflake or being shared with FullContact.
+>>>>>>> 1bfbc99 (added small tweaks and spelling errors)
 
 If you want to learn more about Snowflake Guide formatting, checkout the official documentation here: [Formatting Guide](https://github.com/googlecodelabs/tools/blob/master/FORMAT-GUIDE.md)
 
