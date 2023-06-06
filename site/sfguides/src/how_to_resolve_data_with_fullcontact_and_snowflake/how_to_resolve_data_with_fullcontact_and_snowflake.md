@@ -128,64 +128,87 @@ In order to use the FullContact for Snowflake Application you need a license (AP
 
 
 <!-- ------------------------ -->
-## Configuring the FullContact for Snowflake App
-Duration: 2
+## Prepping the Input Data
+Duration: 1
 
-Look at the [markdown source for this sfguide](https://raw.githubusercontent.com/Snowflake-Labs/sfguides/master/site/sfguides/sample.md) to see how to use markdown to generate code snippets, info boxes, and download buttons. 
+Before we can run Resolve to unify the sample customer data we need to setup a database and schema to hold the output tables and need to create a SEMANTIC VIEW to help the FullContact application understand how to interpret the different columns in the data. 
 
-### JavaScript
-```javascript
-{ 
-  key1: "string", 
-  key2: integer,
-  key3: "string"
-}
+Follow the steps below and copy and paste the SQL to your SQL Worksheet.
+
+1) Create output schema
+
+```sql
+CREATE DATABASE FC_QUICKSTART;
+CREATE SCHEMA FC_QUICKSTART.OUTPUT;
+
+GRANT USAGE ON DATABASE FC_QUICKSTART TO APPLICATION FC_NATIVE_APP;
+GRANT USAGE ON SCHEMA FC_QUICKSTART.OUTPUT TO APPLICATION FC_NATIVE_APP;
 ```
 
-### Java
-```java
-for (statement 1; statement 2; statement 3) {
-  // code block to be executed
-}
+2) Create the Semantic Input view. Run the following stored procedure. It will scan the input dataset and output additional SQL that you will need to copy/paste/run into your worksheet. 
+
+```sql
+CALL FC_NATIVE_APP.APP_SCHEMA.CREATE_INPUT_VIEW(
+'FC_NATIVE_APP.SAMPLE_DATA.CUST_JOURNEY_PURCHASE_DEMO', -- input table name
+'FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC',  -- output view name
+'EMAIL_1',                                              -- name of column to treat as RECORD_ID
+['HEM', 'MAID']);                                       -- type of data we plan on enriching with
 ```
 
-### Info Boxes
-> aside positive
-> 
->  This will appear in a positive info box.
+3) Copy the results of the previous SPROC and run it (it should be something similar to the below)
 
+```sql
+-- This view create statement contains predicted aliases for columns based on data in each column.
+-- Please review the statement and modify it as needed before using it as input to the RESOLVE stored procedure.
+-- Accepted column names for the RESOLVE stored procedure can be found in the documentation.
+CREATE OR REPLACE VIEW FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC AS SELECT
+	EMAIL_1 AS RECORD_ID,
+	FIRST_NAME,
+	LAST_NAME,
+	RECORD_ID,
+	CITY,
+	PURCHASE_CHANNEL,
+	ZIP_CODE,
+	ADDRESS_LINE_1,
+	PHONE_NUMBER,
+	ADDRESS_LINE_2,
+	CUSTOMER_NUMBER,
+	LIFETIME_VALUE,
+	EMAIL_1,
+	STATE
+FROM DEV.APP_SAMPLE_DATA.CUST_JOURNEY_PURCHASE_DEMO;
+GRANT USAGE ON DATABASE FC_QUICKSTART TO APPLICATION FC_NATIVE_APP_DEV;
+GRANT USAGE ON SCHEMA FC_QUICKSTART.OUTPUT TO APPLICATION FC_NATIVE_APP_DEV;
+GRANT SELECT ON VIEW FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC TO APPLICATION FC_NATIVE_APP_DEV;
 
-> aside negative
-> 
->  This will appear in a negative info box.
+CREATE OR REPLACE TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS LIKE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC;
+ALTER TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS ADD COLUMN PIDS ARRAY;
+ALTER TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS ADD COLUMN RESOLVE_RUN_ID VARCHAR;
+GRANT USAGE ON DATABASE FC_QUICKSTART TO APPLICATION FC_NATIVE_APP_DEV;
+GRANT USAGE ON SCHEMA FC_QUICKSTART.OUTPUT TO APPLICATION FC_NATIVE_APP_DEV;
+GRANT SELECT ON TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS TO APPLICATION FC_NATIVE_APP_DEV;
+GRANT INSERT ON TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS TO APPLICATION FC_NATIVE_APP_DEV;
+GRANT DELETE ON TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS TO APPLICATION FC_NATIVE_APP_DEV;
 
-### Buttons
-<button>
+CREATE OR REPLACE TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS_ENRICH_RESULTS LIKE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS;
+ALTER TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS_ENRICH_RESULTS ADD COLUMN PID VARCHAR;
+ALTER TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS_ENRICH_RESULTS ADD COLUMN ENRICH_RUN_ID VARCHAR;
+ALTER TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS_ENRICH_RESULTS ADD COLUMN EMAILS VARIANT;
+ALTER TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS_ENRICH_RESULTS ADD COLUMN MAIDS VARIANT;
 
-  [This is a download button](link.com)
-</button>
+GRANT USAGE ON DATABASE FC_QUICKSTART TO APPLICATION FC_NATIVE_APP_DEV;
+GRANT USAGE ON SCHEMA FC_QUICKSTART.OUTPUT TO APPLICATION FC_NATIVE_APP_DEV;
+GRANT SELECT ON TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS_ENRICH_RESULTS TO APPLICATION FC_NATIVE_APP_DEV;
+GRANT INSERT ON TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS_ENRICH_RESULTS TO APPLICATION FC_NATIVE_APP_DEV;
+GRANT DELETE ON TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS_ENRICH_RESULTS TO APPLICATION FC_NATIVE_APP_DEV;
+```
 
-### Tables
-<table>
-    <thead>
-        <tr>
-            <th colspan="2"> **The table header** </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>The table body</td>
-            <td>with two columns</td>
-        </tr>
-    </tbody>
-</table>
+At this point you should have your SEMANTIC view `FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC` created as well as two empty output tables that will be populated in the next step: `FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS` and `FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS_ENRICH_RESULTS`
 
-### Hyperlinking
-[Youtube - Halsey Playlists](https://www.youtube.com/user/iamhalsey/playlists)
 
 <!-- ------------------------ -->
-## Prepping the data 
-Duration: 2
+## Running the Resolve SPROC to Assign PersonIDs
+Duration: 1
 
 Look at the [markdown source for this guide](https://raw.githubusercontent.com/Snowflake-Labs/sfguides/master/site/sfguides/sample.md) to see how to use markdown to generate these elements. 
 
