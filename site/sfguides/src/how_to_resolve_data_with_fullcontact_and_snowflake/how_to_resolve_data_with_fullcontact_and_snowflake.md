@@ -7,7 +7,7 @@ status: Published
 feedback link: https://github.com/Snowflake-Labs/sfguides/issues
 tags: Getting Started, Data Science, Data Engineering, Twitter 
 
-# How To Resolve Rata with FullContact and Snowflake
+# How To Resolve Data with FullContact and Snowflake
 <!-- ------------------------ -->
 Duration: 1
 
