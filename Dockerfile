@@ -12,7 +12,6 @@ COPY --from=BuildStage /go/bin/claat /usr/local/bin/claat
 RUN apk add --update npm
 
 WORKDIR /app/site
-RUN sh -c "source ./cmds"
 RUN npm install 
 
 EXPOSE 8000
