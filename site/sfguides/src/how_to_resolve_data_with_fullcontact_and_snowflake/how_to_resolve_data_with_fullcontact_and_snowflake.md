@@ -14,6 +14,9 @@ Duration: 1
 ## Overview 
 As Snowflake is used more and more frequently as the central datawarehouse users often find themselves with duplicate copies of customer information in different tables. This guide shows how to use the FullContact for Snowflake Native Application to unify different pieces of customer data using the FullContact PersonID.
 
+With your install we will provide you some synthetic data that will join to our Identity Graph to allow you to test out the application.  By the end of the walkthrough, we're going to show you how several profiles of a fictional customer named Willow Underwood, will now be able to be merged into a single record of that customer.
+To see a more in depth example with other sample dataset, make sure to check out the YouTube product walkthrough that is a companion to this guide.
+
 ### Prerequisites
 - A Snowflake Account that you have `ACCOUNTADMIN`
 - Familiarity with Snowflake SQL
@@ -211,7 +214,7 @@ At this point you should have your SEMANTIC view `FC_QUICKSTART.OUTPUT.CUST_JOUR
 ## Running the Resolve SPROC to Assign PersonIDs
 Duration: 1
 
-These steps are where the magic happens. Copy, paste and run the following SQL to take the Sample provided data and run it through the FullContact Resolve process (which standardizes it and joins it to the FullContact Identity Graph) and assign PersonIDs
+These steps are where the magic happens. Copy, paste and run the following SQL to take the Sample provided data and run it through the FullContact Resolve process (which standardizes it and joins it to the FullContact Identity Graph) and assign Person IDs (PIDs)
 
 1) Run the `RESOLVE` SPROC (replace the `REPLACEWITHYOURAPIKEY` string below with the API you created in the FullContact platform in the previous step)
 
@@ -224,7 +227,7 @@ CALL FC_NATIVE_APP.APP_SCHEMA.RESOLVE(
 );
 ```
 
-2) View the results, making note of the Person IDs(PIDs) column, view metrics.
+2) View the results, making note of the PIDs column, view metrics.
 
 ```sql
 SELECT * FROM FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS LIMIT 10;
@@ -237,8 +240,7 @@ SELECT * FROM FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULT
 SELECT * FROM FC_NATIVE_APP.METRICS.FC_RESOLVE_METRICS;
 ```
 
-
-3) Note how the different versions of Willow were all consolidated into the same PersonID
+4) Note how the different versions of Willow were all consolidated into the same PersonID
 
 ```sql
 SELECT * FROM FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS WHERE PIDS[0]='TODOREPLACEME!!!!!!!';
@@ -250,9 +252,9 @@ Duration: 1
 
 By following this guide you learned how to use the FullContact for Snowfake application to unify disparate customer data through the Fullcontact PersonID. This application reads, standardizes and joins your dataset to the FullContact Identity Graph all without your data leaving the confines of Snowflake or being shared with FullContact.
 
-If you want to learn more about FullContact for Snowflake check out the official docs and consider contacting an expert to learn more about the different products FullContact offers and how it can help you better connect to your customers.
+If you want to learn more about FullContact for Snowflake check out the [official docs](https://docs.fullcontact.com/docs/snowflake-integration) and [contact an expert](https://www.fullcontact.com/contact/) to learn more about the different products FullContact offers and how it can help you better connect to your customers.
 
 ### What we've covered
 - Installing and setting up the FullContact for Snowflake App
 - Creating a FullContact account and API key
-- Running the FullContact for Snowflake App on sample customer data to unify and deuplicate disparate datasets
+- Running the FullContact for Snowflake App on sample customer data to unify and deduplicate disparate datasets
