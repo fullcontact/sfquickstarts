@@ -222,7 +222,7 @@ We provide some sample data with the application install that you can use for th
 
 ```sql
 -- Call the RESOLVE SPROC to resolve and assign PIDs to sample data
-CALL FC_NATIVE_APP.APP_SCHEMA.RESOLVE(
+CALL FC_NATIVE_APP.APP_SCHEMA.RESOLVE_WITH_API_KEY(
 'FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC',                -- input view
 'REPLACEWITHYOURAPIKEY',                                              -- api key
 'FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS' -- output table
