@@ -15,7 +15,7 @@ Duration: 1
 As Snowflake is used more and more frequently as the central datawarehouse users often find themselves with duplicate copies of customer information in different tables. This guide shows how to use the FullContact for Snowflake Native Application to unify different pieces of customer data using the FullContact PersonID.
 
 With your install we will provide you some synthetic data that will join to our Identity Graph to allow you to test out the application.  By the end of the walkthrough, we're going to show you how several profiles of a fictional customer named Willow Underwood, will now be able to be merged into a single record of that customer.
-To see a more in depth example with other sample dataset, make sure to check out the YouTube product walkthrough that is a companion to this guide.
+To see a more in depth example with other sample datasets, make sure to check out the YouTube product walkthrough that is a companion to this guide.
 
 ### Prerequisites
 - A Snowflake Account that you have `ACCOUNTADMIN`
@@ -40,11 +40,11 @@ Duration: 1
 
 The FullContact for Snowflake Native App is available in the Snowflake Marketplace
 
-1) Visit the "Apps" section of your Snowflake Account - ex where YOURACCOUNTLOCATOR is your own Snowflake Account Locator https://app.snowflake.com/us-east-1/YOURACCOUNTLOCATOR/#/apps/applications
+1) Visit the ["Apps" section of Snowsight](https://app.snowflake.com) from your Snowflake Account 
 
 ![Install App](assets/installapp.png)
 
-2) Under the "Recently Shared with You" click the "Get" button next to the FullContact Native Identity Application
+2) Under the "Recently Shared with You" section, click the "Get" button next to the FullContact Native Identity Application
 
 3) Choose the warehouse to use to run the install scripts (an XS warehouse works fine). 
 
@@ -155,7 +155,7 @@ GRANT USAGE ON SCHEMA FC_QUICKSTART.OUTPUT TO APPLICATION FC_NATIVE_APP;
 CALL FC_NATIVE_APP.APP_SCHEMA.CREATE_INPUT_VIEW(
 'FC_NATIVE_APP.SAMPLE_DATA.CUST_JOURNEY_PURCHASE_DEMO', -- input table name
 'FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC',  -- output view name
-'EMAIL_1',                                              -- name of column to treat as RECORD_ID
+'RECORD_ID',                                              -- name of column to treat as RECORD_ID
 ['HEM', 'MAID']);                                       -- type of data we plan on enriching with
 ```
 
@@ -180,19 +180,19 @@ CREATE OR REPLACE VIEW FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC AS SE
 	LIFETIME_VALUE,
 	EMAIL_1,
 	STATE
-FROM DEV.APP_SAMPLE_DATA.CUST_JOURNEY_PURCHASE_DEMO;
-GRANT USAGE ON DATABASE FC_QUICKSTART TO APPLICATION FC_NATIVE_APP_DEV;
-GRANT USAGE ON SCHEMA FC_QUICKSTART.OUTPUT TO APPLICATION FC_NATIVE_APP_DEV;
-GRANT SELECT ON VIEW FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC TO APPLICATION FC_NATIVE_APP_DEV;
+FROM FC_NATIVE_APP.SAMPLE_DATA.CUST_JOURNEY_PURCHASE_DEMO;
+GRANT USAGE ON DATABASE FC_QUICKSTART TO APPLICATION FC_NATIVE_APP;
+GRANT USAGE ON SCHEMA FC_QUICKSTART.OUTPUT TO APPLICATION FC_NATIVE_APP;
+GRANT SELECT ON VIEW FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC TO APPLICATION FC_NATIVE_APP;
 
 CREATE OR REPLACE TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS LIKE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC;
 ALTER TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS ADD COLUMN PIDS ARRAY;
 ALTER TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS ADD COLUMN RESOLVE_RUN_ID VARCHAR;
-GRANT USAGE ON DATABASE FC_QUICKSTART TO APPLICATION FC_NATIVE_APP_DEV;
-GRANT USAGE ON SCHEMA FC_QUICKSTART.OUTPUT TO APPLICATION FC_NATIVE_APP_DEV;
-GRANT SELECT ON TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS TO APPLICATION FC_NATIVE_APP_DEV;
-GRANT INSERT ON TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS TO APPLICATION FC_NATIVE_APP_DEV;
-GRANT DELETE ON TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS TO APPLICATION FC_NATIVE_APP_DEV;
+GRANT USAGE ON DATABASE FC_QUICKSTART TO APPLICATION FC_NATIVE_APP;
+GRANT USAGE ON SCHEMA FC_QUICKSTART.OUTPUT TO APPLICATION FC_NATIVE_APP;
+GRANT SELECT ON TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS TO APPLICATION FC_NATIVE_APP;
+GRANT INSERT ON TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS TO APPLICATION FC_NATIVE_APP;
+GRANT DELETE ON TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS TO APPLICATION FC_NATIVE_APP;
 
 CREATE OR REPLACE TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS_ENRICH_RESULTS LIKE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS;
 ALTER TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS_ENRICH_RESULTS ADD COLUMN PID VARCHAR;
@@ -200,11 +200,11 @@ ALTER TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS_
 ALTER TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS_ENRICH_RESULTS ADD COLUMN EMAILS VARIANT;
 ALTER TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS_ENRICH_RESULTS ADD COLUMN MAIDS VARIANT;
 
-GRANT USAGE ON DATABASE FC_QUICKSTART TO APPLICATION FC_NATIVE_APP_DEV;
-GRANT USAGE ON SCHEMA FC_QUICKSTART.OUTPUT TO APPLICATION FC_NATIVE_APP_DEV;
-GRANT SELECT ON TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS_ENRICH_RESULTS TO APPLICATION FC_NATIVE_APP_DEV;
-GRANT INSERT ON TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS_ENRICH_RESULTS TO APPLICATION FC_NATIVE_APP_DEV;
-GRANT DELETE ON TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS_ENRICH_RESULTS TO APPLICATION FC_NATIVE_APP_DEV;
+GRANT USAGE ON DATABASE FC_QUICKSTART TO APPLICATION FC_NATIVE_APP;
+GRANT USAGE ON SCHEMA FC_QUICKSTART.OUTPUT TO APPLICATION FC_NATIVE_APP;
+GRANT SELECT ON TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS_ENRICH_RESULTS TO APPLICATION FC_NATIVE_APP;
+GRANT INSERT ON TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS_ENRICH_RESULTS TO APPLICATION FC_NATIVE_APP;
+GRANT DELETE ON TABLE FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS_ENRICH_RESULTS TO APPLICATION FC_NATIVE_APP;
 ```
 
 At this point you should have your SEMANTIC view `FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC` created as well as two empty output tables that will be populated in the next step: `FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS` and `FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS_ENRICH_RESULTS`
@@ -214,7 +214,9 @@ At this point you should have your SEMANTIC view `FC_QUICKSTART.OUTPUT.CUST_JOUR
 ## Running the Resolve SPROC to Assign PersonIDs
 Duration: 1
 
-These steps are where the magic happens. Copy, paste and run the following SQL to take the Sample provided data and run it through the FullContact Resolve process (which standardizes it and joins it to the FullContact Identity Graph) and assign Person IDs (PIDs)
+These steps are where the magic happens.
+
+We provide some sample data with the application install that you can use for this initial test. Copy, paste and run the following SQL to take the sample data and run it through the FullContact Resolve process (which standardizes it and joins it to the FullContact Identity Graph) and assign Person IDs (PIDs)
 
 1) Run the `RESOLVE` SPROC (replace the `REPLACEWITHYOURAPIKEY` string below with the API you created in the FullContact platform in the previous step)
 
@@ -227,7 +229,7 @@ CALL FC_NATIVE_APP.APP_SCHEMA.RESOLVE(
 );
 ```
 
-2) View the results, making note of the PIDs column, view metrics.
+2) View the results, making note of the PIDs column.
 
 ```sql
 SELECT * FROM FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS LIMIT 10;
@@ -252,7 +254,7 @@ Duration: 1
 
 By following this guide you learned how to use the FullContact for Snowflake application to unify disparate customer data through the Fullcontact PersonID. This application reads, standardizes and joins your dataset to the FullContact Identity Graph all without your data leaving the confines of Snowflake or being shared with FullContact.
 
-If you want to learn more about FullContact for Snowflake check out the [official docs](https://docs.fullcontact.com/docs/snowflake-integration) and [contact an expert](https://www.fullcontact.com/contact/) to learn more about the different products FullContact offers and how it can help you better connect to your customers.
+If you want to learn more about FullContact for Snowflake check out the [official documentation](https://docs.fullcontact.com/docs/snowflake-integration) or [contact an expert](https://www.fullcontact.com/contact/) to learn more about the different products FullContact offers and how it can help you better connect to your customers.
 
 ### What we've covered
 - Installing and setting up the FullContact for Snowflake App
