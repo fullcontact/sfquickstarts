@@ -218,7 +218,7 @@ These steps are where the magic happens.
 
 We provide some sample data with the application install that you can use for this initial test. Copy, paste and run the following SQL to take the sample data and run it through the FullContact Resolve process (which standardizes it and joins it to the FullContact Identity Graph) and assign Person IDs (PIDs)
 
-1) Run the `RESOLVE` SPROC (replace the `REPLACEWITHYOURAPIKEY` string below with the API you created in the FullContact platform in the previous step)
+1) Run the `RESOLVE_WITH_API_KEY` SPROC (replace the `REPLACEWITHYOURAPIKEY` string below with the API you created in the FullContact platform in the previous step)
 
 ```sql
 -- Call the RESOLVE SPROC to resolve and assign PIDs to sample data
