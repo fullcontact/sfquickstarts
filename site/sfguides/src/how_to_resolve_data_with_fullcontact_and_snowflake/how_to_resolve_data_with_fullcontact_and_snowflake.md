@@ -1,11 +1,11 @@
 author: Alix Thoi
 id: how_to_resolve_data_with_fullcontact_and_snowflake
-summary: This is a sample Snowflake Guide
+summary: Resolve data using FullContact and Snowflake tutorial
 categories: Getting-Started
 environments: web
-status: Published 
+status: Published
 feedback link: https://github.com/Snowflake-Labs/sfguides/issues
-tags: Getting Started, Data Science, Data Engineering, Twitter 
+tags: Getting Started, Data Science, Data Engineering, Twitter, snowflake, FullContact
 
 # How To Resolve Data with FullContact and Snowflake
 <!-- ------------------------ -->
