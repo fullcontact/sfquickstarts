@@ -12,7 +12,7 @@ tags: Getting Started, Data Science, Data Engineering, Twitter
 Duration: 1
 
 ## Overview 
-As Snowflake is used more and more frequently as the central datawarehouse users often find themselves with duplicate copies of customer information in different tables. This guide shows how to use the FullContact for Snowflake Native Application to unify different pieces of customer data using the FullContact PersonID.
+As Snowflake is used more and more frequently as the central datawarehouse users often find themselves with duplicate copies of customer information in different tables. This guide shows how to use the FullContact for Snowflake Native Application to unify different pieces of customer data using the FullContact PersonID to have a single, accurate view of how the customer is engaging with your brand.
 
 With your install we will provide you some synthetic data that will join to our Identity Graph to allow you to test out the application.  By the end of the walkthrough, we're going to show you how several profiles of a fictional customer named Willow Underwood, will now be able to be merged into a single record of that customer.
 To see a more in depth example with other sample datasets, make sure to check out the YouTube product walkthrough that is a companion to this guide.
@@ -50,13 +50,13 @@ The FullContact for Snowflake Native App is available in the Snowflake Marketpla
 
 4) Expand the Options dropdown, where you are able to name the application anything you would like.  We have named the app "FC_NATIVE_APP".  This is the app name we use in the SQL queries we provide post installation of the application in a Snowsight worksheet to help you complete the installation.  
 
-![App options](assets/installoptions.png)
+<img src="assets/installoptions.png" width="500" />
 
 5) Click the Get button to install the application.  The Get button will be deactivated while installing.  There is not currently a loader that displays to give a sense for how the installation is progressing - the installers typically complete within 1-2 minutes.   
 
 6) Once installation is complete, you will see a confirmation modal.  
 
-![Install complete](assets/installcomplete.png)
+<img src="assets/installcomplete.png" width="500" />
 
 7) Click the **Open** button, which will open a worksheet pre-populated with the queries you will need to complete the installation.
 
@@ -245,7 +245,7 @@ SELECT * FROM FC_NATIVE_APP.METRICS.FC_RESOLVE_METRICS;
 4) Note how the different versions of Willow were all consolidated into the same PersonID
 
 ```sql
-SELECT * FROM FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS WHERE PIDS[0]='TODOREPLACEME!!!!!!!';
+SELECT * FROM FC_QUICKSTART.OUTPUT.CUST_JOURNEY_PURCHASE_SEMANTIC_RESOLVE_RESULTS WHERE first_name = 'Willow';
 ```
 
 <!-- ------------------------ -->
